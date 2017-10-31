@@ -20,13 +20,17 @@ function getOneTask(id){
 
 function createTask(body){
   let response
-  if (!body) {
+  if (!body.task) {
     response = {errors: {message: "please enter a task"}}
   } else {
-    tasks.push(body)
+    const id = uuid()
+    const task = body
+    const newTask = { id, ...task }
+    tasks.push(newTask)
+    // tasks.push(task)
     const result = JSON.stringify(tasks)
     fs.writeFileSync('./db/tasks.json', result, 'utf-8')
-    response = body
+    response = newTask
   }
   return response
 }
