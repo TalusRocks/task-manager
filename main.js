@@ -3,7 +3,7 @@ const baseURL = 'http://localhost:3000/tasks'
 function makeTask(taskText, taskId) {
   //make html
   return `<div class="to-do-item">
-    <p>${taskText}</p>
+    <p data-id="${taskId}" class="task-text">${taskText}</p>
     <form class="hide">
       <textarea name="task-text" cols="40" rows="7"></textarea>
       <div class="cancel-save">
@@ -12,6 +12,19 @@ function makeTask(taskText, taskId) {
       </div>
     </form>
     <a class="to-do-done sm-mrg-bottom" data-id="${taskId}">Done</a>
+  </div>`
+}
+
+function editView() {
+  return `<div class="to-do-item">
+    <p data-id="${taskId}" class="task-text">${taskText}</p>
+    <form class="hide">
+      <textarea name="task-text" cols="40" rows="7"></textarea>
+      <div class="cancel-save">
+        <button name="cancel" type="button" class="cancel-button">Cancel</button>
+        <button name="submit" type="submit" class="save-button">Save</button>
+      </div>
+    </form>
   </div>`
 }
 
@@ -27,11 +40,28 @@ function loadTasks() {
       }
 
       for (var j = 0; j < tasks.length; j++) {
+
         let doneButtons = document.querySelectorAll('.to-do-done')
         doneButtons[j].addEventListener('click', (e) => {
           event.preventDefault()
           let taskId = e.srcElement.getAttribute('data-id')
           deleteTask(taskId)
+        })
+
+        let taskText = document.querySelectorAll('.task-text')
+        let editForm = document.querySelectorAll('form')
+        taskText[j].addEventListener('click', (e) => {
+          event.preventDefault()
+
+          e.srcElement.parentElement.innerHTML =
+          `<form>
+              <textarea name="task-text" cols="40" rows="7"></textarea>
+              <div class="cancel-save">
+                <button name="cancel" type="button" class="cancel-button">Cancel</button>
+                <button name="submit" type="submit" class="save-button">Save</button>
+              </div>
+            </form>`
+
         })
       }
 
@@ -42,22 +72,22 @@ function loadTasks() {
 }
 loadTasks()
 
-  //////////CREATE TASK
-  let addTaskButton = document.querySelector('.add-task-button')
+//////////CREATE TASK
+let addTaskButton = document.querySelector('.add-task-button')
 
-  addTaskButton.addEventListener('click', (event) => {
-    event.preventDefault()
-    let task = document.querySelector('.new-task-input').value
+addTaskButton.addEventListener('click', (event) => {
+  event.preventDefault()
+  let task = document.querySelector('.new-task-input').value
 
-    axios.post('http://localhost:3000/tasks', {task} )
-      .then(result => {
-        // console.log(result.errors);
-        //where does my error message go? how to access it?
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  })
+  axios.post('http://localhost:3000/tasks', {task} )
+    .then(result => {
+      // console.log(result.errors);
+      //where does my error message go? how to access it?
+    })
+    .catch(error => {
+      console.log(error);
+    })
+})
 
 //////////DELETE TASK
 function deleteTask(taskId) {
@@ -66,7 +96,6 @@ function deleteTask(taskId) {
       //loadTasks()
       console.log(result.data);
       console.log("AAAAAAAAAAAAA!!!");
-
     })
     .catch(error => {
       console.log(error);
