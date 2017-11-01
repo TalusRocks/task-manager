@@ -74,7 +74,7 @@ function loadTasks() {
 
         ////////CLICK TO EDIT
         let taskText = document.querySelectorAll('.task-text')
-        // let editForm = document.querySelectorAll('form')
+
         taskText[j].addEventListener('click', (e) => {
           event.preventDefault()
 
@@ -103,8 +103,9 @@ addTaskButton.addEventListener('click', (event) => {
 
   axios.post('http://localhost:3000/tasks', {task} )
     .then(result => {
-      // console.log(result.errors);
-      //where does my error message go? how to access it?
+      let taskErrorP = document.querySelector('.task-error')
+      taskErrorP.textContent = result.data.errors.message
+  
     })
     .catch(error => {
       console.log(error);
@@ -115,9 +116,7 @@ addTaskButton.addEventListener('click', (event) => {
 function deleteTask(taskId) {
   axios.delete(`http://localhost:3000/tasks/${taskId}`)
     .then(result => {
-      //loadTasks()
-      console.log(result.data);
-      console.log("AAAAAAAAAAAAA!!!");
+      console.log("task deleted");
     })
     .catch(error => {
       console.log(error);

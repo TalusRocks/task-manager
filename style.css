@@ -28,41 +28,70 @@ p, li {
   margin-right: 0.5em;
 }
 
+/*.text-center {
+  text-align: center;
+}*/
 /*section {
   margin-top: 5em
 }*/
 
-div.header {
+/*div.header {
   margin-bottom: 1.5em;
-}
+}*/
 
 
 /*===== TODAY'S TO-DOS =====*/
-.to-do > div.header {
+/*.to-do > div.header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+}*/
+
+.to-do > h2 {
+  text-align: center;
+  margin: 0.5em;
+}
+
+.task-error {
+  text-align: center;
+  color: red;
 }
 
 .task-add-div {
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+.new-task-form {
+  width: 25em;
+  margin: 1em;
 }
 
 .new-task-input {
   height: 2em;
   font-size: 1em;
+  width: 100%;
 }
 
 a.add-task-button {
   text-decoration: none;
-  color: orangered;
+  color: #007eff;
   font-size: 1.2em;
   margin-left: 1em;
+  transition: 0.5s;
 }
 
 a.add-task-button:hover {
-  color: #ff8100;
+  color: #106bc8;
+}
+
+.task-text {
+  transition: 0.5s;
+}
+
+.task-text:hover {
+    background-color: #f9f55c;
 }
 
 .to-do-row {
@@ -90,13 +119,18 @@ a.add-task-button:hover {
 a.to-do-done {
   font-size: 1.5em;
   text-decoration: none;
-  background-color: #4AAD52;
+  background-color: #e3ad15;
   color: #fff;
   width: 100%;
   padding: 0.5em 0em;
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  transition: 0.5s;
+}
+
+a.to-do-done:hover {
+  background-color: #c6950a;
 }
 
 textarea {
@@ -119,6 +153,32 @@ textarea {
 
 .save-button {
   margin-left: 1em;
+}
+
+.save-button, .cancel-button {
+  font-family: 'Josefin Sans';
+  font-size: 1em;
+  padding: 0.5em;
+  border: none;
+  color: #fff;
+}
+
+.save-button {
+  background-color: #4aac53;
+  transition: 0.5s;
+}
+
+.save-button:hover {
+  background-color: #34903c;
+}
+
+.cancel-button {
+  background-color: #999999;
+  transition: 0.5s;
+}
+
+.cancel-button:hover {
+  background-color: #7a7979;
 }
 
 @media (max-width: 990px) {
