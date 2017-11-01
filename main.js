@@ -1,5 +1,10 @@
 const baseURL = 'http://localhost:3000/tasks'
 
+function reload() {
+  document.querySelector('.to-do-row').innerHTML = ''
+  loadTasks()
+}
+
 //////////UPDATE TASKS
 function saveEdit(taskText, taskId) {
   let forms = document.querySelectorAll('form')
@@ -10,14 +15,12 @@ function saveEdit(taskText, taskId) {
         taskText = document.querySelector(`#text-${taskId}`).value
         axios.put(`http://localhost:3000/tasks/${taskId}`, {id: taskId, task: taskText})
         .then(result => {
-          document.querySelector('.to-do-row').innerHTML = ''
-          loadTasks()
+          reload()
         })
       }
       if (e.target.matches("button.cancel-button")) {
         e.preventDefault()
-        document.querySelector('.to-do-row').innerHTML = ''
-        loadTasks()
+        reload()
       }
     })
   }
@@ -67,6 +70,8 @@ addTaskButton.addEventListener('click', (event) => {
   let task = document.querySelector('.new-task-input').value
   axios.post('http://localhost:3000/tasks', {task} )
     .then(result => {
+      reload()
+
       let taskErrorP = document.querySelector('.task-error')
       taskErrorP.textContent = result.data.errors.message
     })
@@ -80,6 +85,7 @@ function deleteTask(taskId) {
   axios.delete(`http://localhost:3000/tasks/${taskId}`)
     .then(result => {
       console.log("task deleted");
+      reload()
     })
     .catch(error => {
       console.log(error);
