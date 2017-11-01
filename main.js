@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000/tasks'
+const baseURL = 'https://task-notes.herokuapp.com//tasks'
 
 function reload() {
   document.querySelector('.to-do-row').innerHTML = ''
