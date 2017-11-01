@@ -13,7 +13,7 @@ function saveEdit(taskText, taskId) {
       if (e.target.matches("button.save-button")) {
         e.preventDefault()
         taskText = document.querySelector(`#text-${taskId}`).value
-        axios.put(`http://localhost:3000/tasks/${taskId}`, {id: taskId, task: taskText})
+        axios.put(`${baseURL}/${taskId}`, {id: taskId, task: taskText})
         .then(result => {
           reload()
         })
@@ -28,7 +28,7 @@ function saveEdit(taskText, taskId) {
 
 //////////GET TASKS
 function loadTasks() {
-  axios.get('http://localhost:3000/tasks')
+  axios.get(baseURL)
     .then(result => {
       let tasks = result.data
       let toDoRow = document.querySelector(".to-do-row")
@@ -68,7 +68,7 @@ let addTaskButton = document.querySelector('.add-task-button')
 addTaskButton.addEventListener('click', (event) => {
   event.preventDefault()
   let task = document.querySelector('.new-task-input').value
-  axios.post('http://localhost:3000/tasks', {task} )
+  axios.post(baseURL, {task} )
     .then(result => {
       let inputField = document.querySelector('.new-task-input')
       inputField.value = ""
@@ -84,7 +84,7 @@ addTaskButton.addEventListener('click', (event) => {
 
 //////////DELETE TASK
 function deleteTask(taskId) {
-  axios.delete(`http://localhost:3000/tasks/${taskId}`)
+  axios.delete(`${baseURL}/${taskId}`)
     .then(result => {
       console.log("task deleted");
       reload()
