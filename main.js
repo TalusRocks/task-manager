@@ -39,7 +39,11 @@ function saveEdit(taskText, taskId) {
           document.querySelector('.to-do-row').innerHTML = ''
           loadTasks()
         })
-
+      }
+      if (e.target.matches("button.cancel-button")) {
+        e.preventDefault()
+        document.querySelector('.to-do-row').innerHTML = ''
+        loadTasks()
       }
     })
   }
