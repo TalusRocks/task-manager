@@ -70,6 +70,8 @@ addTaskButton.addEventListener('click', (event) => {
   let task = document.querySelector('.new-task-input').value
   axios.post('http://localhost:3000/tasks', {task} )
     .then(result => {
+      let inputField = document.querySelector('.new-task-input')
+      inputField.value = ""
       reload()
 
       let taskErrorP = document.querySelector('.task-error')
