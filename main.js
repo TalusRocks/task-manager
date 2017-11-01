@@ -5,7 +5,7 @@ function makeTask(taskText, taskId) {
   return `<div class="to-do-item">
     <p data-id="${taskId}" class="task-text">${taskText}</p>
     <form class="hide">
-      <textarea name="task-text" cols="40" rows="7"></textarea>
+      <textarea id="text-${taskId}" name="task-text" cols="40" rows="7">${taskText}</textarea>
       <div class="cancel-save">
         <button name="cancel" type="button" class="cancel-button">Cancel</button>
         <button name="submit" type="submit" class="save-button">Save</button>
@@ -15,18 +15,38 @@ function makeTask(taskText, taskId) {
   </div>`
 }
 
-function editView() {
-  return `<div class="to-do-item">
-    <p data-id="${taskId}" class="task-text">${taskText}</p>
-    <form class="hide">
-      <textarea name="task-text" cols="40" rows="7"></textarea>
-      <div class="cancel-save">
-        <button name="cancel" type="button" class="cancel-button">Cancel</button>
-        <button name="submit" type="submit" class="save-button">Save</button>
-      </div>
-    </form>
-  </div>`
+function editView(taskText, taskId) {
+  return `<form data-id="${taskId}">
+    <textarea id="text-${taskId}" name="task-text" cols="40" rows"8">${taskText}</textarea>
+    <div class="cancel-save">
+      <button name="cancel" type="button" class="cancel-button" data-id="${taskId}">Cancel</button>
+      <button name="submit" type="submit" class="save-button" data-id="${taskId}">Save</button>
+    </div>
+  </form>`
 }
+
+function saveEdit(taskText, taskId) {
+  let forms = document.querySelectorAll('form')
+
+  for (let l = 0; l < forms.length; l++) {
+    forms[l].addEventListener('click', (e) => {
+
+      if (e.target.matches("button.save-button")) {
+        e.preventDefault()
+        taskText = document.querySelector(`#text-${taskId}`).value
+        axios.put(`http://localhost:3000/tasks/${taskId}`, {id: taskId, task: taskText})
+        .then(result => {
+          document.querySelector('.to-do-row').innerHTML = ''
+          loadTasks()
+        })
+
+      }
+    })
+  }
+
+}
+
+
 
 //////////GET TASKS
 function loadTasks() {
@@ -48,20 +68,18 @@ function loadTasks() {
           deleteTask(taskId)
         })
 
+        ////////CLICK TO EDIT
         let taskText = document.querySelectorAll('.task-text')
-        let editForm = document.querySelectorAll('form')
+        // let editForm = document.querySelectorAll('form')
         taskText[j].addEventListener('click', (e) => {
           event.preventDefault()
 
+          taskText = e.srcElement.textContent
+          let taskId = e.srcElement.getAttribute('data-id')
           e.srcElement.parentElement.innerHTML =
-          `<form>
-              <textarea name="task-text" cols="40" rows="7"></textarea>
-              <div class="cancel-save">
-                <button name="cancel" type="button" class="cancel-button">Cancel</button>
-                <button name="submit" type="submit" class="save-button">Save</button>
-              </div>
-            </form>`
+          editView(taskText, taskId)
 
+          saveEdit(taskText, taskId)
         })
       }
 

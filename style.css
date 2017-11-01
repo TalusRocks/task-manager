@@ -127,7 +127,7 @@ textarea {
   }
 }
 
-@media (max-width: 570px) {
+@media (max-width: 670px) {
   .to-do-item {
     width: 90%;
   }
