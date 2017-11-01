@@ -28,25 +28,8 @@ p, li {
   margin-right: 0.5em;
 }
 
-/*.text-center {
-  text-align: center;
-}*/
-/*section {
-  margin-top: 5em
-}*/
-
-/*div.header {
-  margin-bottom: 1.5em;
-}*/
-
 
 /*===== TODAY'S TO-DOS =====*/
-/*.to-do > div.header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}*/
-
 .to-do > h2 {
   text-align: center;
   margin: 0.5em;
