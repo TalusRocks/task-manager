@@ -174,4 +174,7 @@ textarea {
   .to-do-item {
     width: 90%;
   }
+  .to-do > h2 {
+    font-size: 2.5em;
+  }
 }
